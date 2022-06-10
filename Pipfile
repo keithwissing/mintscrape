@@ -1,0 +1,17 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+mintapi = {path = "./mintapi"}
+pydantic = "*"
+requests = "*"
+get-docker-secret = "*"
+
+[dev-packages]
+pylint = "*"
+pytest = "*"
+
+[requires]
+python_version = "3.9"

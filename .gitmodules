@@ -1,0 +1,3 @@
+[submodule "mintapi"]
+	path = mintapi
+	url = https://github.com/mrooney/mintapi.git
