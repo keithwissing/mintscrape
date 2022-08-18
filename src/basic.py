@@ -1,10 +1,13 @@
 import datetime
 import json
+from typing import List, Optional
 
 import mintapi
 import requests
 from get_docker_secret import get_docker_secret
 from pydantic.dataclasses import dataclass
+
+from src.models import ModelItem
 
 @dataclass
 class Configuration:
@@ -12,12 +15,12 @@ class Configuration:
     password: str
     mfa_token: str
 
-def get_configuration() -> Configuration:
+def get_configuration() -> Optional[Configuration]:
     uname = get_docker_secret('mint_username')
-    if not uname:
-        return {}
     passwd = get_docker_secret('mint_password')
     token = get_docker_secret('mint_mfa_token')
+    if not uname or not passwd or not token:
+        return None
     # influx_host = get_docker_secret('influx_host')
     # influx_db = get_docker_secret('influx_db')
     return Configuration(uname, passwd, token)
@@ -105,8 +108,17 @@ def remove_account_datetimes(account):
             del account[df]
     return account
 
-def networth_to_influx(usage):
-    return 'networth value=%s %d' % (usage)
+def influx_timestamp(stamp):
+    date_time_obj = datetime.datetime.fromisoformat(stamp)
+    return int(date_time_obj.timestamp() * 1000000000)
+
+def networth_to_influx(timestamp, networth):
+    return 'networth value=%s %d' % (networth, timestamp)
+
+def send_networth_to_influx(timestamp, nw):
+    ilp = networth_to_influx(timestamp, nw)
+    print(ilp)
+    send_to_influx('10.9.9.120', 'financial', ilp)
 
 def send_to_influx(influx_host, influx_db, payload):
     url = 'http://{}:8086/write'.format(influx_host)
@@ -115,7 +127,8 @@ def send_to_influx(influx_host, influx_db, payload):
     response = requests.request('POST', url, data=payload, headers=headers, params=querystring)
     return response.text
 
-def send_accounts_to_influx(timestamp, data):
+def accounts_to_influx_classic(timestamp, data):
+    ret = []
     for a in data:
         if not a['isClosed']:
             aid = a['id'].strip()
@@ -127,8 +140,29 @@ def send_accounts_to_influx(timestamp, data):
             value = a['value'].strip()
 
             ilp = f'balances,aid={aid},klass={klass},fi={fiName},name={name},l4={l4} value={value} {timestamp}'
-            print(ilp)
-            send_to_influx('10.9.9.120', 'financial', ilp)
+            ret.append(ilp)
+    return ret
+
+def accounts_to_influx(timestamp, data: List[ModelItem]):
+    ret = []
+    for a in data:
+        if not a.isClosed:
+            aid = a.id.strip()
+            fiName = a.fiName.replace(' ', '-').strip()
+            name = a.cpAccountName.replace(' ', '-').strip()
+            ml4 = a.cpAccountNumberLast4.strip() if a.cpAccountNumberLast4 else None
+            l4 = ml4[-4:] if ml4 else '***'
+            klass = a.investmentType.strip() if a.investmentType else None
+            value = a.value
+
+            ilp = f'balances,aid={aid},klass={klass},fi={fiName},name={name},l4={l4} value={value} {timestamp}'
+            ret.append(ilp)
+    return ret
+
+def send_accounts_to_influx(timestamp, data):
+    for payload in accounts_to_influx(timestamp, data):
+        print(payload)
+        send_to_influx('10.9.9.120', 'financial', payload)
 
 def do_something():
     a = datetime.datetime.now()
@@ -137,33 +171,22 @@ def do_something():
 
     nw, acc, inv = get_data_from_mint()
 
-    print(nw)
-
-    with open("/data/networth.txt", "a") as myfile:
-        myfile.write(f'{stamp} {nw:.2f}\n')
+    with open("/data/networth.txt", "a") as file:
+        file.write(f'{stamp} {nw:.2f}\n')
 
     for account in acc:
         remove_account_datetimes(account)
 
     acc_js = json.dumps(acc, skipkeys=True)
 
-    with open("/data/accounts_js.txt", "a") as myfile:
-        myfile.write(f'{stamp} {acc_js}\n')
+    with open("/data/accounts_js.txt", "a") as file:
+        file.write(f'{stamp} {acc_js}\n')
 
-    with open("/data/investments.txt", "a") as myfile:
-        myfile.write(f'{stamp} {inv}\n')
+    with open("/data/investments.txt", "a") as file:
+        file.write(f'{stamp} {inv}\n')
 
     send_networth_to_influx(timestamp, nw)
     send_accounts_to_influx(timestamp, acc)
-
-def influx_timestamp(stamp):
-    date_time_obj = datetime.datetime.fromisoformat(stamp)
-    return int(date_time_obj.timestamp() * 1000000000)
-
-def send_networth_to_influx(timestamp, nw):
-    ilp = networth_to_influx((nw, timestamp))
-    print(ilp)
-    send_to_influx('10.9.9.120', 'financial', ilp)
 
 def main():
     do_something()

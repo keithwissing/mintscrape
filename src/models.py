@@ -1,7 +1,68 @@
-
-from typing import List, Optional
+from typing import List, Optional, Any
 
 from pydantic import BaseModel
+
+# class Addresses(BaseModel):
+#     realEstateStatus: str
+#     address1: str
+
+class OlderAccount(BaseModel):
+    linkedAccountId: Any
+    accountName: str
+    addAccountDate: int
+    fiLoginDisplayName: str
+    ccAggrStatus: Optional[int]
+    exclusionType: str
+    linkedAccount: Any
+    isHiddenFromPlanningTrends: bool
+    isTerminal: bool
+    linkCreationTime: Any
+    isActive: bool
+    accountStatus: str
+    accountSystemStatus: str
+    lastUpdated: int
+    fiLastUpdated: int
+    yodleeAccountNumberLast4: Optional[str]
+    isError: bool
+    fiName: str
+    isAccountNotFound: bool
+    klass: str
+    possibleLinkAccounts: List
+    lastUpdatedInString: str
+    accountTypeInt: int
+    currency: str
+    id: int
+    isHostAccount: bool
+    value: float
+    fiLoginId: int
+    usageType: Optional[str]
+    interestRate: Optional[float]
+    accountType: str
+    currentBalance: float
+    fiLoginStatus: str
+    isAccountClosedByMint: bool
+    userName: Optional[str]
+    yodleeName: str
+    closeDate: Optional[int]
+    linkStatus: str
+    accountId: int
+    isClosed: bool
+    fiLoginUIStatus: str
+    yodleeAccountId: Optional[int]
+    name: str
+    status: str
+    dueDate: Optional[str] = None
+    dueAmt: Optional[float] = None
+    rateType: Optional[int] = None
+    origAmount: Optional[Optional[float]] = None
+    origDate: Optional[str] = None
+    rate: Optional[Optional[float]] = None
+    term: Optional[int] = None
+    amountDue: Optional[Optional[float]] = None
+    # addresses: Optional[Addresses] = None
+    isValueUserDefined: Optional[bool] = None
+    provider: Optional[str] = None
+    useKBB: Optional[bool] = None
 
 class ModelItem(BaseModel):
     type: str
