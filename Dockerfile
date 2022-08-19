@@ -34,7 +34,7 @@ WORKDIR /app
 COPY Pipfile* ./
 RUN pipenv install --system --deploy
 
-COPY mintapi/mintapi mintapi
+# COPY mintapi/mintapi mintapi
 COPY src/. .
 
 USER nobody:nogroup

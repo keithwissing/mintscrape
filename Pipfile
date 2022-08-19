@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-mintapi = {path = "./mintapi"}
+mintapi = "*"
 pydantic = "*"
 requests = "*"
 get-docker-secret = "*"
@@ -14,4 +14,4 @@ pylint = "*"
 pytest = "*"
 
 [requires]
-python_version = "3.9"
+python_version = "3.10"
