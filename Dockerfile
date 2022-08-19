@@ -1,4 +1,6 @@
-FROM python:3.9
+FROM python:3.10
+LABEL org.opencontainers.image.source=https://github.com/keithwissing/mintscrape
+LABEL description="Docker container to collect account data from Mint http://mint.intuit.com"
 
 # install google chrome
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
@@ -26,13 +28,15 @@ ENV DISPLAY=:99
 #RUN apk add --update chromedriver gcc g++ make python3 py-pip python3-dev && rm -rf /var/cache/apk/*
 #RUN apk add --update gcc g++ make && rm -rf /var/cache/apk/*
 
-WORKDIR /usr/src/app
+RUN pip install --no-cache-dir pipenv
 
-COPY *.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+WORKDIR /app
+COPY Pipfile* ./
+RUN pipenv install --system --deploy
 
 COPY mintapi/mintapi mintapi
-COPY *.py .
+COPY src/. .
 
-CMD [ "python3", "./basic.py" ]
+USER nobody:nogroup
 
+CMD ["/usr/bin/env", "python3", "./basic.py" ]
