@@ -7,7 +7,7 @@ import requests
 from get_docker_secret import get_docker_secret
 from pydantic.dataclasses import dataclass
 
-from src.models import ModelItem
+from models import ModelItem
 
 @dataclass
 class Configuration:
