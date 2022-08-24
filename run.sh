@@ -1,11 +1,13 @@
 #!/bin/bash
 
+date
+
 if [[ z$1 != z-n ]]; then
-    # docker build --no-cache -f Dockerfile -t mintscrape .
     docker build -f Dockerfile -t mintscrape .
 fi
 
 docker run -it --rm --name mintscrape \
+    --env-file .env \
     -v /etc/localtime:/etc/localtime:ro \
-    -v /data/mintscrape:/data mintscrape
-
+    -v /data/mintscrape:/data \
+    kwissing/mintscrape

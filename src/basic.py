@@ -88,7 +88,7 @@ def get_data_from_mint():
     # mint.get_bills()
 
     # Get investments (holdings and transactions)
-    inv = mint.get_invests_data()
+    inv = mint.get_investment_data()
 
     # Close session and exit cleanly from selenium/chromedriver
     mint.close()
@@ -184,6 +184,8 @@ def do_something():
 
     with open("/data/investments.txt", "a") as file:
         file.write(f'{stamp} {inv}\n')
+
+    acc = [ModelItem.parse_obj(x) for x in acc]
 
     send_networth_to_influx(timestamp, nw)
     send_accounts_to_influx(timestamp, acc)

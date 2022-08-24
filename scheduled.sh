@@ -7,6 +7,8 @@ if [[ z$1 != z-n ]]; then
 fi
 
 docker run -d --rm --name mintscrape \
+    --env-file .env \
     -v /etc/localtime:/etc/localtime:ro \
-    -v /data/mintscrape:/data mintscrape
+    -v /data/mintscrape:/data \
+    kwissing/mintscrape
 
