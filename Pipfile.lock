@@ -44,7 +44,7 @@
                 "sha256:0d9c601124e5a6ba9712dbc60d9c53c21e34f5f641fe83002317394311bdce14",
                 "sha256:90c1a32f1d68f940488354e36370f6cca89f0f106db09518524c88d6ed83f382"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_full_version >= '3.6.0'",
             "version": "==2022.9.24"
         },
         "cffi": {
@@ -121,7 +121,7 @@
                 "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845",
                 "sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_full_version >= '3.6.0'",
             "version": "==2.1.1"
         },
         "configargparse": {
@@ -161,7 +161,7 @@
                 "sha256:d4ef6cc305394ed669d4d9eebf10d3a101059bdcf2669c366ec1d14e4fb227bd",
                 "sha256:d9e69ae01f99abe6ad646947bba8941e896cb3aa805be2597a0400e0764b5818"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_full_version >= '3.6.0'",
             "version": "==38.0.1"
         },
         "exceptiongroup": {
@@ -231,10 +231,10 @@
         },
         "mintapi": {
             "hashes": [
-                "sha256:02cc52ca59017a9003a63faef3d667ec255130d1a3dd1ac969471b6d02f74011"
+                "sha256:cadef2cd4c69655c302aa97f37e7cb41a53f95569ecf7804e4bd4e736a4c3bc4"
             ],
             "index": "pypi",
-            "version": "==2.8"
+            "version": "==2.9"
         },
         "more-itertools": {
             "hashes": [
@@ -283,7 +283,7 @@
                 "sha256:0df3f6d9bf7f712873fdf1444f33cd58a6bd5b687ed04a256abd78393acf2c25",
                 "sha256:11acec8b2b5655d5220524bbe44f5c9d63918178239cda6892c5571fcbd0f859"
             ],
-            "markers": "python_version >= '3.6'",
+            "markers": "python_full_version >= '3.6.0'",
             "version": "==2.3.1"
         },
         "outcome": {
