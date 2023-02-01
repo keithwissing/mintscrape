@@ -323,10 +323,10 @@
         },
         "mintapi": {
             "hashes": [
-                "sha256:14beb528235fd301f8a7b418f7c215e28fdad59723480f99a4910612deec9614"
+                "sha256:a482f3c942c1478286fb0a97719b5a802cdcd1f44f289f4a6467424e371f2d8b"
             ],
             "index": "pypi",
-            "version": "==2.11"
+            "version": "==2.12"
         },
         "more-itertools": {
             "hashes": [
@@ -535,7 +535,7 @@
                 "sha256:867ff2acb9d2768823f7d98bdf10718acfe3c3426582390d5e81b6a552e25888",
                 "sha256:8e9bf8fa7f5fa629437f2894ee93a4d4b11018c2200fd9f881d90be3dc768943"
             ],
-            "markers": "python_version >= '3.7' and python_version < '4.0'",
+            "markers": "python_version >= '3.7' and python_version < '4'",
             "version": "==2.0.3"
         },
         "six": {
