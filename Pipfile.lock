@@ -215,7 +215,10 @@
             "version": "==23.13.1"
         },
         "mintapi": {
-            "path": "./mintapi",
+            "hashes": [
+                "sha256:a482f3c942c1478286fb0a97719b5a802cdcd1f44f289f4a6467424e371f2d8b"
+            ],
+            "index": "pypi",
             "version": "==2.12"
         },
         "more-itertools": {
