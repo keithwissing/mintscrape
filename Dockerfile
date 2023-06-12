@@ -1,4 +1,4 @@
-FROM python:3.11.3
+FROM python:3.11.4
 LABEL org.opencontainers.image.source=https://github.com/keithwissing/mintscrape
 LABEL description="Docker container to collect account data from Mint http://mint.intuit.com"
 
