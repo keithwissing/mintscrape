@@ -1,3 +1,7 @@
+# This project is obsolete
+
+# The mint website is being discontinued
+
 > crontab -e
 
 ```
